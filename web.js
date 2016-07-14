@@ -15,6 +15,6 @@ app.set('port', (process.env.PORT || 9000));
 app.use('/', express.static(__dirname + "/public"));
 
 app.listen(app.get('port'), function() {
-	console.log("Running app.postnord.com on port " + app.get('port') + ".");
+	console.log("Running app on port " + app.get('port') + ".");
 });
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lte-ie9 lte-ie8 lte-ie7 lte-ie6"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lte-ie9 lte-ie8 lte-ie7"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lte-ie9 lte-ie8"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lte-ie9"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><!--<![endif]-->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8" />
+	<meta name="theme-color" content="#00A0D6">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<title>PostNord DI</title> 
+	<link rel="stylesheet" href="./css/app.css" />
+</head>
+<body class="postnord-se">
+
+	<div class="header">
+		<a href="/">
+			<div id="logo"></div>
+		</a>
+	</div>
+
+	<div id="postnord-widget-container">
+		
+	</div>
+	<script src="/js/postnord.js"></script>
+	<script id="config">
+		function qwerty(callback) {
+			if(typeof callback !== 'function'){
+				return;
+			}
+
+			if(window.location.host.indexOf('localhost') >= 0) {
+				callback({
+					localhost: true,
+					bankid: 'https://gate.ess.postnord.com/mga/sps/saml20sp/saml20/logininitial?RequestBinding=HTTPRedirect&ResponseBinding=HTTPPost&Target=https%3A%2F%2Fgate.ess.postnord.com%2Fmga%2Fsps%2Foauth%2Foauth20%2Fauthorize%3Fclient_id%3Ddigitalidentifiering-local%26scope%3Dread%26response_type%3Dtoken%26state%3Dxyz%26redirect_uri%3Dhttp%3A%2F%2Flocalhost%2Fcallback',
+					id: 'https://gate.ess.postnord.com/mga/sps/saml20sp/saml20/logininitial?RequestBinding=HTTPRedirect&ResponseBinding=HTTPPost&Target=',
+					cb: 'https://gate.ess.postnord.com/mga/sps/oauth/oauth20/authorize?client_id=digitalidentifiering&scope=read&response_type=token&state=rand0m&redirect_uri=http://localhost/callback',
+					cookie: 'postnord-id-token',
+					domain: 'localhost'
+				});
+			} else {
+				callback({
+					localhost: false,
+					bankid: 'https://gate.ess.postnord.com/mga/sps/saml20sp/saml20/logininitial?RequestBinding=HTTPRedirect&ResponseBinding=HTTPPost&Target=https%3A%2F%2Fgate.ess.postnord.com%2Fmga%2Fsps%2Foauth%2Foauth20%2Fauthorize%3Fclient_id%3Ddigitalidentifiering%26scope%3Dread%26response_type%3Dtoken%26state%3Dxyz%26redirect_uri%3Dhttps%3A%2F%2Fid.postnord.com%2Fcallback/',
+					id: 'https://gate.ess.postnord.com/mga/sps/saml20sp/saml20/logininitial?RequestBinding=HTTPRedirect&ResponseBinding=HTTPPost&Target=',
+					cb: 'https://gate.ess.postnord.com/mga/sps/oauth/oauth20/authorize?client_id=digitalidentifiering&scope=read&response_type=token&state=rand0m&redirect_uri=https://id.postnord.com/callback',
+					cookie: '.postnord.com',
+					domain: 'id.postnord.com' 
+				});
+			}
+		}
+	</script>
+	<script>
+		PostnordWidget.init({
+			baseUrl: './',
+			element: '#postnord-widget-container',
+			language: window.location.search
+		});
+	</script>
+</body>
+</html>

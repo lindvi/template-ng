@@ -1,0 +1,46 @@
+<div id="start">
+	<div class="clear__box"></div>
+	<h1 class="text--center">{start_DigitalIdHeader}</h1>
+	<div class="start__image"></div>
+
+	<div class="text--center text__box">
+		<p>
+			{start_IntroText}
+		</p>
+
+		<button class="button green no--arrow js-to-handoff animate">{start_IdentifyButton}</button>
+		<button class="button white no--arrow js-to-bankid">{start_NoId}</button>
+		<span class="lock">{safe_connection}</span>
+	</div>
+	<div class="text__box">
+		
+		<h2>{start_HowItWorks}</h2>
+		<div>
+			<div class="swirl">
+				<div class="plate barcode"></div>
+			</div>
+			<h3>{start_PickupImage}</h3>
+			<p>{start_PickupImageText}</p>
+		</div>
+		<div>
+			<div class="swirl">
+				<div class="plate code"></div>
+			</div>
+			
+			<h3>{start_PickupCode}</h3>
+			<p>{start_PickupCodeText}</p>
+		</div>
+		<div>
+			<div class="swirl">
+				<div class="plate share"></div>
+			</div>
+			<h3>{start_PickupSomeone}</h3>
+			<p>{start_PickupSomeoneText}</p>
+		</div>
+
+		<div>
+			<button class="button green no--arrow js-to-handoff">{start_IdentifyButton}</button>
+			<p>{start_MoreInfo} <a href="tel:{start_phoneNo}">{start_phoneNo}</a></p>
+		</div>
+	</div>
+</div>

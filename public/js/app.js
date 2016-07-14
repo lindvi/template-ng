@@ -21,9 +21,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('Home', {
       url: '/',
       templateUrl: 'html/main.html'
-    }).state('test', {
-      url: '/test',
-      templateUrl: 'public/html/main.html',
     });
 });
 'use strict';
@@ -31,6 +28,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
 /*globals _ */
 app.controller('MainCtrl',['$scope', function ($scope) {
 
-	$scope.test = 'test';
+	$scope.template = {
+		type: '',
+		list: []
+	};
+
+	$scope.list = [];
+
+	$scope.addToList = function() {
+		$scope.template.list.push($scope.template.list.length);
+	};
+
+	$scope.removeFromList = function(index) {
+		$scope.template.list.splice(index,1);
+	}
+
+	$scope.$watch('containerView', function(value){
+		$scope.template.type = value;
+	})
 
 }]);

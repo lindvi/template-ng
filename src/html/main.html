@@ -1,3 +1,50 @@
-<div ng-controller="MainCtrl">
-	<h1>{{test}}</h1>
+<div class="dashboard" ng-controller="MainCtrl">
+	<div class="column">
+
+		<div>
+
+
+			<label>
+				News
+				<input type="radio" ng-model="template.type" value="news">
+			</label>
+
+			<label>
+				Timeline
+				<input type="radio" ng-model="template.type" value="timeline">
+			</label>
+
+			<label>
+				Info
+				<input type="radio" ng-model="template.type" value="info">
+			</label>
+
+			<button ng-click="addToList()">tryck</button>
+		</div>
+
+
+		{{containerView || 'Not selected' }}
+
+		<div ng-if="containerView === 'news'">
+			<h1>News</h1>
+		</div>
+
+		<div ng-if="containerView === 'timeline'">
+			<h1>timeline</h1>
+		</div>
+
+		<div ng-if="containerView === 'info'">
+			<h1>info</h1>
+		</div>
+	</div>
+	<div class="column">
+		{{template}}
+
+
+		<div class="box" ng-repeat="number in template.list track by $index">
+			{{number}}
+
+			<button ng-click="removeFromList($index)">Ta bort</button>
+		</div>
+	</div>
 </div>

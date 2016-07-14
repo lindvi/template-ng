@@ -111,58 +111,14 @@ gulp.task('scripts-modernizr', function() {
 });
 
 
-gulp.task('scripts-qrcode', function() {
-	// Process .js files
-	// Files are ordered for dependency sake
-	return gulp.src([
-		paths.dev + '/' + paths.scripts + '/libs/jquery.qrcode.min.js'
-		])
-	.pipe(plumber())
-	.pipe(concat('jquery.qrcode.min.js'))
-	.pipe(replace(/(\/\/)?(console\.)?log\((.*?)\);?/g, ''))
-	.pipe(gulp.dest(paths.dest + '/' + paths.scripts));
-});
-
-
-// Concat (and uglify if production mode) Vendor JavaScript
-gulp.task('scripts-vendor', function() {
-	// Process .js files
-	// Files are ordered for dependency sake
-	return gulp.src([
-		paths.dev + '/' + paths.scripts + '/libs/jquery.js',
-		//paths.dev + '/' + paths.scripts + '/libs/JsBarcode.js',
-		paths.dev + '/' + paths.scripts + '/libs/js.cookie.js',
-		//paths.dev + '/' + paths.scripts + '/libs/jquery.qrcode.min.js',
-		'!' + paths.dev + '/' + paths.scripts + '/libs/modernizr.js'
-		])
-	.pipe(plumber())
-	.pipe(concat('libs.js'))
-	.pipe(gulpif(isProduction, replace(/(\/\/)?(console\.)?log\((.*?)\);?/g, '')))
-	//.pipe(gulpif(isProduction, uglify('libs.js')))
-	.pipe(gulp.dest(paths.dest + '/' + paths.scripts))
-	.pipe(gulpif(!isJenkins,livereload()));
-});
-
 // Concat (and uglify if production mode) 
 // Everything else JavaScript
 gulp.task('scripts', function() {
 	// Process .js files
 	// Files are ordered for dependency sake
 	return gulp.src([
-		paths.dev + '/' + paths.scripts + '/classes/BankIdController.js',
-		paths.dev + '/' + paths.scripts + '/classes/BarcodeController.js',
-		paths.dev + '/' + paths.scripts + '/classes/BarcodeService.js',
-		paths.dev + '/' + paths.scripts + '/classes/ErrorController.js',
-		paths.dev + '/' + paths.scripts + '/classes/HandoffController.js',
-		paths.dev + '/' + paths.scripts + '/classes/IdentityController.js',
-		paths.dev + '/' + paths.scripts + '/classes/LocalStorage.js',
-		paths.dev + '/' + paths.scripts + '/classes/StartController.js',
-		paths.dev + '/' + paths.scripts + '/classes/State.js',
-		paths.dev + '/' + paths.scripts + '/classes/CookieService.js',
-		paths.dev + '/' + paths.scripts + '/classes/Translator.js',
-		paths.dev + '/' + paths.scripts + '/classes/PabloService.js',
-		paths.dev + '/' + paths.scripts + '/classes/IDService.js',
-		paths.dev + '/' + paths.scripts + '/app.js'
+		paths.dev + '/' + paths.scripts + '/*.js',
+		paths.dev + '/' + paths.scripts + '/controllers/*.js'
 		])
 	.pipe(plumber())
 	.pipe(concat('app.js'))
@@ -292,7 +248,7 @@ gulp.task('watch', function() {
 });
 
 // Task to run all tasks
-gulp.task('base', ['copy', 'compass', 'compass-noqueries', 'scripts-modernizr', 'scripts-qrcode', 'scripts-vendor', 'scripts', 'scripts-loader', 'images', 'hint']);
+gulp.task('base', ['copy', 'compass', 'compass-noqueries', 'scripts', 'scripts-loader', 'images', 'hint']);
 // Node specific tasks
 gulp.task('node', []);
 

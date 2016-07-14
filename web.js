@@ -12,6 +12,8 @@ function fooRoute(req, res, next) {
 }
 
 app.set('port', (process.env.PORT || 9000));
+
+app.use('/node_modules/', express.static(__dirname + "/node_modules/"));
 app.use('/', express.static(__dirname + "/public"));
 
 app.listen(app.get('port'), function() {

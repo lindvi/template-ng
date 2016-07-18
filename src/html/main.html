@@ -1,50 +1,89 @@
 <div class="dashboard" ng-controller="MainCtrl">
 	<div class="column">
 
+		<div class="module" ng-repeat="module in modules">
+			<div class="header">
+				{{module.name}}
+			</div>
+
+
+			<div class="body">
+				<p class="secondary--text">{{module.type}}</p>
+				<button ng-click="removeItem($index)">Remove module</button>
+				<div class="divider"></div>
+				<div>
+					<div class="item">
+						<div ng-if="module.type === 'news'">
+							<form ng-submit="addNewsItem($index, itemTitle, itemTime, itemContent, itemAuthor, itemImage, itemExternalUrl)">
+								
+							<label>
+								Title
+							</label>
+							<input type="text" name="" ng-model="itemTitle">
+							<label>
+								Time
+							</label>
+							<input type="text" name="" ng-model="itemTime">
+							<label>
+								Content
+							</label>
+							<textarea ng-model="itemContent"></textarea>
+							<label>
+								Author
+							</label>
+							<input type="text" name="" ng-model="itemAuthor">
+							<label>
+								image
+							</label>
+							<input type="text" name="" ng-model="itemImage">
+							<label>
+								externalUrl
+							</label>
+							<input type="text" name="" ng-model="itemExternalUrl">
+							
+							<input type="submit" name="">
+							</form>
+
+						</div>
+
+					</div>
+					<div class="divider"></div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in module.list">
+								<td>{{item.title}}</td><td><button class="btn small red" ng-click="removeItem($parent.$index, $index)">Remove</button></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<button class="btn btn-info" ng-if="module.type === 'timeline'" ng-click="addTaskToModule($index)">Add task item</button>
+					<button class="btn btn-info" ng-if="module.type === 'timeline'" ng-click="addEventToModule($index)">Add event item</button>
+				</div>
+
+			</div>
+		</div>
+
 		<div>
+			<form ng-submit="addToList(moduleName, moduleType)">
 
+				<label>
+					Name
+					<input type="text" ng-model="moduleName">
+				</label>
 
-			<label>
-				News
-				<input type="radio" ng-model="template.type" value="news">
-			</label>
-
-			<label>
-				Timeline
-				<input type="radio" ng-model="template.type" value="timeline">
-			</label>
-
-			<label>
-				Info
-				<input type="radio" ng-model="template.type" value="info">
-			</label>
-
-			<button ng-click="addToList()">tryck</button>
-		</div>
-
-
-		{{containerView || 'Not selected' }}
-
-		<div ng-if="containerView === 'news'">
-			<h1>News</h1>
-		</div>
-
-		<div ng-if="containerView === 'timeline'">
-			<h1>timeline</h1>
-		</div>
-
-		<div ng-if="containerView === 'info'">
-			<h1>info</h1>
+				<label>
+					Type
+					<select ng-model="moduleType" ng-options="module for module in moduleTypes"></select>
+				</label>
+				<input type="submit" name="" class="btn btn-success">
+			</form>
 		</div>
 	</div>
-	<div class="column">
-		{{template}}
-
-
-		<div class="box" ng-repeat="number in template.list track by $index">
-			{{number}}
-
-			<button ng-click="removeFromList($index)">Ta bort</button>
-		</div>
-	</div>
+	<div class="column json">{{ nAppenModules | prettyJSON }}</div>
 </div>

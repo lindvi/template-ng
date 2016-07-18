@@ -1,0 +1,136 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+$colorPrimary: #E4457F;
+$colorPrimaryDark: #E4457F;
+$textColorDark: #202020;
+$textColorLight: #FFFFFF;
+$textColorGrey: #909090;
+$accentDark: #212121;
+$accentYellow: #fcda04;
+$accentLight: #f7f7f7;
+$white: #fafafa;
+
+html, body {
+	padding: 0;
+	margin: 0; 
+  font-size: 16px;
+  font-family: 'Open sans';
+}
+
+.dashboard { 
+  display: flex;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  height: 100vh;
+  overflow: scroll;
+  .column {
+    position: relative;
+    -webkit-flex: 1 0 0;
+    flex: 1 0 0;
+    max-width: 50%;
+    height: 100vh;
+    overflow: scroll;
+    &.cont {
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+    &:nth-child(even) {
+      background-color: #aaaaaa;
+      border-left: 1px solid #dadada;
+    }
+
+    &:nth-child(odd) {
+      background-color: #dadada;
+      border-right: 1px solid #aaaaa;
+    }
+  }
+}
+
+.box {
+  margin: 0 auto;
+  min-width: 600px;
+  min-height: 100px;	
+}
+
+
+.module {
+  margin: 15px;
+  background-color: #fafafa;
+
+  .header {
+    background-color: $colorPrimary;
+    color: $white;
+    font-size: 1.2rem;
+    font-weight: 300;
+    box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+    padding: 5px 15px; 
+  }
+  .body {
+    padding: 15px; 
+  
+    label {
+      display: block;
+    }
+
+    input[type="text"], 
+    textarea {
+      width: 100%;
+    }
+
+    .item {
+      margin: 10px 0;
+      &:nth-child(even) {
+        background-color: darken($white, 5%);
+      }
+    }
+  }
+
+
+  button,
+  input[type=submit] {
+    background-color: $colorPrimary;
+    border: 0;
+    border-radius: 0;
+    padding: 5px 10px;
+    color: $white;
+    font-weight: 400;
+    margin: 5px 0px;
+    font-size: 1rem;  
+  }
+
+}
+
+.json {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(100% - 45px);
+    white-space: pre;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    display: block;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: transparent;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background-color: $colorPrimary;
+}
+
+.hidden {
+  display: none;
+}
+
+.secondary--text {
+  color: $textColorGrey;
+}
+
+.shadow-z-1 {
+  box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+}

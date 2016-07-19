@@ -1,21 +1,30 @@
 <div class="dashboard" ng-controller="MainCtrl">
 	<div class="column">
-
-		<div class="module" ng-repeat="module in modules">
-			<div class="header">
-				{{module.name}}
-			</div>
-
-
-			<div class="body">
-				<p class="secondary--text">{{module.type}}</p>
-				<button ng-click="removeItem($index)">Remove module</button>
-				<div class="divider"></div>
-				<div>
-					<div class="item">
-						<div ng-if="module.type === 'news'">
-							<form ng-submit="addNewsItem($index, itemTitle, itemTime, itemContent, itemAuthor, itemImage, itemExternalUrl)">
-								
+		<div>
+			<form ng-submit="addToList(moduleName, moduleType)">
+				<label>
+					Name
+					<input type="text" ng-model="moduleName">
+				</label>
+				<label>
+					Type
+				<select ng-model="moduleType" ng-options="module for module in moduleTypes"></select>
+			</label>
+			<input type="submit" name="" class="btn btn-success">
+		</form>
+	</div>
+	<div class="module" ng-repeat="module in modules">
+		<div class="header" ng-click="hideBody = !hideBody">
+			{{module.name}}
+		</div>
+		<div class="body" ng-hide="hideBody">
+			<button ng-click="removeItem($index)">Remove module</button>
+			<p class="secondary--text">Type: {{module.type}}</p>
+			<div class="divider"></div>
+			<div>
+				<div class="item">
+					<div ng-if="module.type === 'news'">
+						<form ng-submit="addNewsItem($index, itemTitle, itemTime, itemContent, itemAuthor, itemImage, itemExternalUrl)">
 							<label>
 								Title
 							</label>
@@ -33,57 +42,201 @@
 							</label>
 							<input type="text" name="" ng-model="itemAuthor">
 							<label>
-								image
+								Image url
 							</label>
 							<input type="text" name="" ng-model="itemImage">
 							<label>
-								externalUrl
+								External url
 							</label>
 							<input type="text" name="" ng-model="itemExternalUrl">
-							
 							<input type="submit" name="">
-							</form>
-
-						</div>
-
+						</form>
 					</div>
-					<div class="divider"></div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="item in module.list">
-								<td>{{item.title}}</td><td><button class="btn small red" ng-click="removeItem($parent.$index, $index)">Remove</button></td>
-							</tr>
-						</tbody>
-					</table>
-
-					<button class="btn btn-info" ng-if="module.type === 'timeline'" ng-click="addTaskToModule($index)">Add task item</button>
-					<button class="btn btn-info" ng-if="module.type === 'timeline'" ng-click="addEventToModule($index)">Add event item</button>
+					<div ng-if="module.type === 'timeline'">
+						<form>
+							<label>
+								Type
+								<select ng-model="timelineType" ng-options="timelineType for timelineType in timelineTypes">
+									<option value="">-- choose type --</option>
+								</select>
+							</label>
+						</form>
+						<div ng-if="timelineType === 'task'">
+							<form ng-submit="addTaskItem($index, itemTitle, itemTime, itemAllDay, itemDescription, itemRemind, itemTag)">
+								<label>
+									Title
+								</label>
+								<input type="text" name="" ng-model="itemTitle">
+								<label>
+									Time
+								</label>
+								<input type="text" name="" ng-model="itemTime">
+								<label>
+									All day
+								</label>
+								<input type="checkbox" name="" ng-model="itemAllDay">
+								<label>
+									Description
+								</label>
+								<textarea ng-model="itemDescription"></textarea>
+								<label>
+									Remind
+								</label>
+								<input type="checkbox" name="" ng-model="itemRemind">
+								<label>
+									Tag
+								</label>
+								<input type="text" name="" ng-model="itemTag">
+								<input type="submit" name="">
+							</form>
+						</div>
+						<div ng-if="timelineType === 'event'">
+							<form ng-submit="addEventItem($index, itemTitle, itemTime, itemContent, itemAuthor, itemImage, itemExternalUrl)" ng-show="!showTask" ng-hide="showTask">
+								<label>
+									Title
+								</label>
+								<input type="text" name="" ng-model="itemTitle">
+								<label>
+									Time
+								</label>
+								<input type="text" name="" ng-model="itemTime">
+								<label>
+									All day
+								</label>
+								<input type="checkbox" name="" ng-model="itemAllDay">
+								<label>
+									Description
+								</label>
+								<textarea ng-model="itemDescription"></textarea>
+								<label>
+									Endtime
+								</label>
+								<input type="text" name="" ng-model="itemEndTime"> <!-- Add plus button for Locations -->
+								<label>
+									Tag
+								</label>
+								<input type="text" name="" ng-model="itemTag">
+								<input type="submit" name="">
+							</form>
+						</div>
+					</div>
+					<div ng-if="module.type === 'info'">
+						<ng-form>
+						<label>
+							Title
+						</label>
+						<input type="text" name="" ng-model="itemTitle">
+						<label>
+							Subtitle
+						</label>
+						<input type="text" name="" ng-model="itemSubtitle">
+						<label>
+							Image url
+						</label>
+						<input type="text" name="" ng-model="itemImage">
+						<button class="btn" ng-click="addInfoItem($index, itemTitle, itemSubtitle, itemImage)">add this info</button>
+						</ng-form>
+						<div ng-repeat="infoItem in module.list">
+							<div class="header" ng-click="hideInfoItem = !hideInfoItem">
+								{{infoItem.title}}
+							</div>
+							<div class="body" ng-hide="hideInfoItem">
+								<ng-form>
+								<label>
+									Group title
+									<input type="text" name="" ng-model="groupTitle">
+									<button class="btn" ng-click="addGroup($parent.$index, $index, groupTitle)">add new group</button>
+								</label>
+								</ng-form>
+								<div ng-repeat="group in infoItem.groups">
+									<div class="header" ng-click="hideGroup = !hideGroup">
+										{{group.title}}
+									</div>
+									<div class="body" ng-hide="hideGroup">
+										<ng-form>
+										<label>
+											Type
+											<select ng-model="infoItemType" ng-options="infoItemType for infoItemType in infoItemTypes">
+												<option value="">-- choose type --</option>
+											</select>
+										</label>
+										</ng-form>
+										<div ng-if="infoItemType === 'person'">
+											<ng-form>
+											<label>
+												Name
+											</label>
+											<input type="text" name="" ng-model="itemName">
+											<label>
+												Title
+											</label>
+											<input type="text" name="" ng-model="itemTitle">
+											<label>
+												Email
+											</label>
+											<input type="text" name="" ng-model="itemEmail">
+											<label>
+												Number
+											</label>
+											<input type="text" name="" ng-model="itemNumber">
+											<button class="btn" ng-click="addPersonItem($parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, itemName, itemTitle, itemEmail, itemNumber)">add this person</button>
+											</ng-form>
+										</div>
+										<div ng-if="infoItemType === 'text'">
+											<ng-form>
+											<label>
+												Content
+											</label>
+											<textarea ng-model="itemContent"></textarea>
+											<button class="btn" ng-click="addTextItem($parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, itemContent)">add this text</button>
+											</ng-form>
+										</div>
+										<div ng-if="infoItemType === 'image'">
+											<ng-form>
+											<label>
+												Image url
+											</label>
+											<textarea ng-model="itemUrl"></textarea>
+											<button class="btn" ng-click="addImageItem($parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, itemUrl)">add this image</button>
+											</ng-form>
+										</div>
+									</div>
+								</div>
+								<div class="divider"></div>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Group title</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="group in infoItem.groups">
+											<td>{{group.title}}</td><td><button class="btn small red" ng-click="removeGroupItem($parent.$parent.$index, $parent.$index, $index)">Remove</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
-
+				<div class="divider"></div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in module.list">
+							<td>{{item.title}}</td><td><button class="btn small red" ng-click="removeItem($parent.$index, $index)">Remove</button></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-
-		<div>
-			<form ng-submit="addToList(moduleName, moduleType)">
-
-				<label>
-					Name
-					<input type="text" ng-model="moduleName">
-				</label>
-
-				<label>
-					Type
-					<select ng-model="moduleType" ng-options="module for module in moduleTypes"></select>
-				</label>
-				<input type="submit" name="" class="btn btn-success">
-			</form>
-		</div>
 	</div>
-	<div class="column json">{{ nAppenModules | prettyJSON }}</div>
+</div>
+<div class="column json">{{ nAppenModules | prettyJSON }}</div>
 </div>
